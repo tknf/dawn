@@ -3,25 +3,21 @@ const path = require("path");
 /** @type { import("@storybook/builder-vite").StorybookViteConfig } */
 module.exports = {
   framework: "@storybook/react",
-  builder: "@storybook/builder-vite",
   stories: ["../packages/**/*.stories.tsx"],
   addons: ["@storybook/addon-storysource"],
   reactOptions: {
     strictMode: true
   },
-  viteFinal: async (config) => {
-    const newConfig = {
-      ...config,
-      resolve: {
-        ...config.resolve,
-        alias: {
-          ...config.resolve.alias,
-          ...convertTsConfigPathsToWebpackAliases()
-        }
+  webpackFinal: async (config) => ({
+    ...config,
+    resolve: {
+      ...config.resolve,
+      alias: {
+        ...config.resolve.alias,
+        ...convertTsConfigPathsToWebpackAliases()
       }
-    };
-    return newConfig;
-  }
+    }
+  })
 };
 
 function convertTsConfigPathsToWebpackAliases() {
