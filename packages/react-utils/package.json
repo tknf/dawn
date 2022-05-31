@@ -1,0 +1,8 @@
+{
+  "name": "@tknf/react-utils",
+  "version": "0.1.0",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "version": "yarn version"
+  }
+}

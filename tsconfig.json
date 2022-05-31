@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@tknf/react-calendar": ["packages/react-calendar/src"],
+      "@tknf/react-utils": ["packages/react-utils/src"]
+    }
+  }
+}

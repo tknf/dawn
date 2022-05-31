@@ -1,0 +1,109 @@
+{
+  "name": "react-ui-monorepo",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*/*"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "lint": "eslint packages --ext .js,.ts,.tsx",
+    "typecheck": "tsc --skipLibCheck --noEmit",
+    "test": "jest",
+    "test:ci": "yarn typecheck && jest --ci && yarn cypress:ci",
+    "storybook": "start-storybook -p 9009 --ci",
+    "cypress:ci": "start-server-and-test storybook http://localhost:9009 cypress:run",
+    "cypress:run": "cypress run",
+    "cypress:dev": "cypress open",
+    "dev": "yarn storybook",
+    "build-storybook": "build-storybook",
+    "build": "yarn build:config && yarn build:packages && yarn build:cleanup",
+    "build:config": "mv tsconfig.json tsconfig.tmp.json && mv tsconfig.production.json tsconfig.json",
+    "build:packages": "parcel build 'packages/*/*/' --no-cache && yarn build:fix-type-defs",
+    "build:fix-type-defs": "node ./scripts/fix-type-defs-imports",
+    "build:cleanup": "mv tsconfig.json tsconfig.production.json && mv tsconfig.tmp.json tsconfig.json",
+    "publish:stable": "yarn bump:stable && yarn clean && yarn build && yarn workspaces foreach -pv --exclude primitives --exclude ssr-testing npm publish --tolerate-republish --access public",
+    "publish:next": "yarn bump:next && yarn clean && yarn build && yarn workspaces foreach -pv --exclude primitives --exclude ssr-testing npm publish --tolerate-republish --access public --tag next",
+    "clean": "yarn workspaces foreach -pv --exclude primitives --exclude ssr-testing run clean",
+    "reset": "yarn clean && rm -rf node_modules .yarn/cache .parcel-cache",
+    "bump:stable": "yarn version apply --all",
+    "bump:next": "yarn version apply --all --prerelease",
+    "bump:check": "yarn version check"
+  },
+  "dependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@radix-ui/react-icons": "^1.1.1",
+    "@stitches/core": "^1.2.8",
+    "@storybook/addon-storysource": "^6.5.0-alpha.63",
+    "@storybook/react": "^6.5.6",
+    "@testing-library/cypress": "^7.0.6",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.0.1",
+    "@testing-library/user-event": "^14.1.0",
+    "@tknf/eslint-config-typescript": "^1.0.6",
+    "@tknf/prettier-config": "^1.0.6",
+    "@types/jest": "^27.4.1",
+    "@types/jest-axe": "^3.5.3",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.5",
+    "cypress": "^8.0.0",
+    "cypress-real-events": "^1.5.0",
+    "eslint": "^8.16.0",
+    "jest": "^27.5.1",
+    "jest-axe": "^6.0.0",
+    "jest-watch-typeahead": "^1.0.0",
+    "parcel": "^2.6.0",
+    "prettier": "^2.6.2",
+    "ts-jest": "^28.0.3",
+    "typescript": "^4.7.2"
+  },
+  "resolutions": {
+    "chokidar": "3.4.3"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "roots": [
+      "<rootDir>/packages"
+    ],
+    "testMatch": [
+      "**/?(*.)+(test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "@tknf/(.+)$": "<rootDir>/packages/$1/src"
+    },
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/scripts/setup-tests.ts",
+      "jest-axe/extend-expect"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "@tknf/eslint-config-typescript",
+    "rules": {
+      "no-console": "off",
+      "no-plusplus": "off",
+      "no-undef": "off",
+      "react/display-name": "off",
+      "react/no-array-index-key": "off",
+      "react-hooks/rules-of-hooks": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "dist"
+  ],
+  "prettier": "@tknf/prettier-config"
+}

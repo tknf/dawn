@@ -1,0 +1,15 @@
+{
+  "name": "@tknf/react-calendar",
+  "version": "0.1.0",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "version": "yarn version"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "dayjs": "^1.11.2"
+  },
+  "devDependencies": {
+    "dayjs": "^1.11.2"
+  }
+}
