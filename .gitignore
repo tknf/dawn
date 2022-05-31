@@ -5,6 +5,7 @@ dist
 test-output.*
 .cache
 .parcel-cache
+.turbo
 storybook-static
 .env
 .eslintcache
