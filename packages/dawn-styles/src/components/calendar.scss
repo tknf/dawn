@@ -1,0 +1,60 @@
+@use "../functions" as *;
+
+@include di() {
+  &Calendar {
+    display: block;
+
+    &__Month {
+      display: block;
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+    }
+
+    &__Header {
+      display: block;
+      border-bottom: border(standard);
+    }
+
+    &__HeaderWeek {
+      display: flex;
+      flex-wrap: nowrap;
+      margin-bottom: spacing(2);
+    }
+
+    &__HeaderDay {
+      flex: 1 1;
+      text-align: center;
+      padding: 0;
+      text-transform: uppercase;
+      font-size: font-size(body-small);
+      font-weight: font-weight(regular);
+    }
+
+    &__Grid {
+      display: block;
+    }
+
+    &__Week {
+      margin: spacing(2) 0;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &__Day {
+      position: relative;
+      flex: 1 1 0%;
+      display: flex;
+      align-items: flex-end;
+      padding: spacing(8) spacing(1) spacing(1);
+      min-height: calc(line-height(loose) + spacing(8) + spacing(1));
+    }
+
+    &__DayText {
+      position: absolute;
+      top: spacing(2);
+      left: spacing(2);
+      font-size: font-size(body-small);
+    }
+  }
+}

@@ -1,0 +1,102 @@
+@use "../functions" as *;
+
+@include di() {
+  &TextContainer {
+    @include val(text-container-spacing, spacing(4));
+
+    &--spacing-tight {
+      @include val(text-container-spacing, spacing(2));
+    }
+    &--spacing-loose {
+      @include val(text-container-spacing, spacing(5));
+    }
+
+    > :not(:first-child) {
+      margin-top: di(text-container-spacing);
+    }
+  }
+
+  &DisplayText {
+    margin: 0;
+    letter-spacing: letter-spacing(tight);
+
+    &--size-small {
+      font-size: font-size(display-small);
+      font-weight: font-weight(regular);
+      line-height: line-height(standard);
+    }
+
+    &--size-medium {
+      font-size: font-size(display-medium);
+      font-weight: font-weight(regular);
+      line-height: line-height(sung);
+    }
+
+    &--size-large {
+      font-size: font-size(display-large);
+      font-weight: font-weight(semibold);
+      line-height: line-height(sung);
+    }
+
+    &--size-extra-large {
+      font-size: font-size(display-xlarge);
+      font-weight: font-weight(semibold);
+      line-height: line-height(loose);
+    }
+  }
+
+  &CJK {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  &Heading {
+    font-size: font-size(body-standard);
+    font-weight: font-weight(semibold);
+    line-height: line-height(standard);
+    margin: 0;
+  }
+
+  &Subheading {
+    text-transform: uppercase;
+  }
+
+  &TextStyle {
+    &--variation {
+      &-positive {
+        color: color(success-foreground);
+      }
+      &-negative {
+        color: color(error-foreground);
+      }
+      &-warning {
+        color: color(warning-foreground);
+      }
+      &-strong {
+        font-weight: font-weight(bold);
+      }
+      &-muted {
+        color: color(muted-foreground);
+      }
+      &-code {
+        font-family: font-family(body-mono);
+      }
+    }
+  }
+
+  &Clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &VisuallyHidden {
+    @include visually-hidden();
+
+    &--focusable:focus-visible {
+      clip: auto !important;
+      width: auto !important;
+      height: auto !important;
+    }
+  }
+}

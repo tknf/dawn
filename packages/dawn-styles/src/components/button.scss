@@ -1,0 +1,319 @@
+@use "../functions" as *;
+
+@mixin button($name, $value) {
+  @include val(button-#{$name}, $value);
+}
+
+@function button($name) {
+  @return di(button-#{$name});
+}
+
+:root {
+  @include button(border-radius, border-radius(button));
+
+  @include button(standard-foreground, color(standard-foreground));
+  @include button(standard-background, color(standard-background));
+  @include button(standard-border, border(interactive));
+  @include button(standard-hover, color(opacity-1));
+  @include button(standard-active, color(opacity-2));
+
+  @include button(primary-foreground, color(standard-background));
+  @include button(primary-background, color(core-accent));
+  @include button(primary-border, border(accent));
+  @include button(primary-hover, color(core-accent-alt));
+  @include button(primary-active, color(core-accent-muted));
+  @include button(destructive-foreground, color(standard-background));
+  @include button(destructive-background, color(error-foreground));
+  @include button(destructive-border, border(error));
+  @include button(pressed-foreground, color(standard-background));
+  @include button(pressed-background, color(muted-foreground));
+  @include button(pressed-border, border(standard));
+
+  @include button(spinner-size, di(spinner-size-small));
+  @include button(small-min-height, line-height(sung));
+  @include button(large-min-height, line-height(loosest));
+  @include button(vertical-spacing, calc((line-height(loose) - line-height(tight) - spacing("0-5")) / 2));
+  @include button(small-vertical-spacing, calc((button(small-min-height) - line-height(tight) - spacing("0-5")) / 2));
+  @include button(large-vertical-spacing, calc((button(large-min-height) - line-height(tight) - spacing("0-5")) / 2));
+}
+
+@include di() {
+  &Button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: line-height(loose);
+    min-width: line-height(loose);
+    border: button(standard-border);
+    border-radius: button(border-radius);
+    background-color: button(standard-background);
+    color: button(standard-foreground);
+    margin: 0;
+    padding: button(vertical-spacing) spacing(4);
+    box-shadow: none;
+    line-height: line-height(none);
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &__Content {
+      font-size: font-size(body-standard);
+      font-weight: font-weight(medium);
+      line-height: line-height(tighter);
+      text-transform: none;
+      letter-spacing: normal;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0.0625rem;
+      min-height: 0.0625rem;
+      z-index: 1;
+    }
+
+    &__Icon:first-of-type {
+      margin-left: calc(-1 * spacing(1));
+    }
+    &__Icon:last-of-type {
+      margin-right: calc(-1 * spacing(1));
+    }
+    :not(&__Icon) + &__Icon {
+      margin-left: spacing(1);
+    }
+    &__Icon + :not(&__Icon) {
+      margin-left: spacing(1);
+    }
+
+    &--icon-only,
+    &--icon-only &__Icon {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    &:not(&--plain) &__Content {
+      width: 100%;
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      box-shadow: focus-ring();
+    }
+
+    &__Backdrop {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      transition: background-color 150ms ease;
+      border-radius: button(border-radius);
+      z-index: 0;
+    }
+
+    &:hover &__Backdrop {
+      background-color: button(standard-hover);
+    }
+    &:active &__Backdrop {
+      background-color: button(standard-active);
+    }
+
+    &--outline {
+      background-color: color(core-transparent);
+    }
+
+    &--plain {
+      margin: calc(-1 * button(vertical-spacing)) calc(-1 * spacing(2));
+      padding-left: spacing(2);
+      padding-right: spacing(2);
+      background-color: color(core-transparent);
+      border: 0;
+      color: color(core-link);
+
+      &:not(.di-Button--icon-only):hover {
+        text-decoration: underline;
+        color: color(core-link-alt);
+      }
+      &:not(.di-Button--icon-only):active {
+        text-decoration: underline;
+        color: color(core-link-muted);
+      }
+    }
+    &--plain:not(.di-Button--icon-only) &__Backdrop {
+      display: none;
+    }
+    &--plain &__Content {
+      font-weight: font-weight(regular);
+      text-decoration: underline;
+    }
+
+    &--plain {
+      &.di-Button {
+        &--monochrome {
+          color: currentColor;
+          &:hover {
+            color: currentColor;
+          }
+          &:active {
+            color: currentColor;
+          }
+        }
+
+        &--destructive {
+          background-color: color(core-transparent);
+          border: 0;
+          color: color(error-foreground);
+          &:hover,
+          &:active {
+            color: color(error-foreground);
+          }
+        }
+      }
+    }
+
+    &--primary {
+      background-color: button(primary-background);
+      color: button(primary-foreground);
+      border: button(primary-border);
+    }
+    &--primary:hover &__Backdrop {
+      background-color: button(primary-hover);
+    }
+    &--primary:active &__Backdrop {
+      background-color: button(primary-active);
+    }
+
+    &--destructive {
+      color: button(destructive-foreground);
+      background-color: button(destructive-background);
+      border: button(destructive-border);
+    }
+    &--destructive:hover &__Backdrop {
+      background-color: button(standard-hover);
+    }
+    &--destructive:active &__Backdrop {
+      background-color: button(standard-active);
+    }
+
+    &--icon-only {
+      margin: calc(-0.5 * (line-height(loose) - di(icon-size-medium)));
+    }
+
+    &--size-small {
+      min-height: button(small-min-height);
+      padding: button(small-vertical-spacing) spacing(3);
+    }
+    &--plain.di-Button--size-small {
+      padding-left: spacing(2);
+      padding-right: spacing(2);
+      margin: calc(-1 * button(small-vertical-spacing)) calc(-1 * spacing(2));
+    }
+
+    &--size-large {
+      min-height: button(large-min-height);
+      padding: button(large-vertical-spacing) spacing(6);
+      font-size: font-size(body-medium);
+    }
+    &--size-large &__Content {
+      font-size: font-size(body-medium);
+    }
+    &--plain.di-Button--size-large {
+      padding-top: button(vertical-spacing);
+      padding-bottom: button(vertical-spacing);
+      padding-left: spacing(2);
+      padding-right: spacing(2);
+      margin: calc(-1 * button(vertical-spacing)) calc(-1 * spacing(2));
+    }
+
+    &--text-align-left {
+      text-align: left;
+    }
+    &--text-align-center {
+      text-align: center;
+    }
+    &--text-align-right {
+      text-align: right;
+    }
+
+    &--remove-underline &__Content {
+      text-decoration: none;
+    }
+
+    &--pressed {
+      background-color: button(pressed-background);
+      color: button(pressed-foreground);
+      border: button(pressed-border);
+    }
+    &--pressed:hover &__Backdrop,
+    &--pressed:active &__Backdrop {
+      background-color: color(core-transparent);
+    }
+
+    &:disabled {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    &--disabled {
+      transition: none;
+      box-shadow: none;
+      color: color(muted-foreground);
+      background-color: color(standard-background);
+      border: border(muted);
+    }
+
+    &--primary.di-Button--disabled,
+    &--destructive.di-Button--disabled {
+      color: color(muted-foreground);
+      background-color: color(muted-background);
+      border: border(muted);
+    }
+
+    &--outline.di-Button--destructive {
+      color: button(destructive-background);
+      background-color: color(core-transparent);
+    }
+
+    &--plain.di-Button--disabled {
+      color: color(muted-foreground);
+      border: 0;
+      background-color: color(core-transparent);
+    }
+
+    &--loading {
+      color: color(core-transparent);
+    }
+
+    &--loading svg,
+    &--loading.di-Button--disabled svg {
+      color: color(muted-foreground);
+    }
+
+    &--loading &__Content {
+      color: color(core-transparent);
+    }
+
+    &--full-width {
+      width: 100%;
+    }
+
+    &__Spinner {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: calc(-1 * button(spinner-size) / 2);
+      margin-left: calc(-1 * button(spinner-size) / 2);
+    }
+
+    &--loading &__Spinner {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@use "../functions" as *;
+
+@mixin spinner($name, $value) {
+  @include val(spinner-#{$name}, $value);
+}
+
+@function spinner($name) {
+  @return di(spinner-#{$name});
+}
+
+:root {
+  @include spinner(size-small, 1.25rem);
+  @include spinner(size-large, 1.5rem);
+}
+
+@keyframes di-Spinner__spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@include di() {
+  &Spinner {
+    display: block;
+    animation: di-Spinner__spin 1.25s cubic-bezier(0.22, 0.35, 0.72, 0.83) infinite;
+
+    &__Content {
+      display: block;
+      border: border(standard);
+      border-top: border(accent);
+      border-width: 0.125rem;
+      border-radius: border-radius(rounded);
+    }
+
+    &--size-large {
+      width: spinner(size-large);
+      min-width: spinner(size-large);
+      height: spinner(size-large);
+      min-height: spinner(size-large);
+    }
+
+    &--size-large &__Content {
+      width: spinner(size-large);
+      height: spinner(size-large);
+    }
+
+    &--size-small {
+      width: spinner(size-small);
+      min-width: spinner(size-small);
+      height: spinner(size-small);
+      min-height: spinner(size-small);
+    }
+
+    &--size-small &__Content {
+      width: spinner(size-small);
+      height: spinner(size-small);
+    }
+  }
+}

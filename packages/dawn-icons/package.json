@@ -1,0 +1,42 @@
+{
+  "name": "@tknf/dawn-icons",
+  "description": "",
+  "keywords": [
+    "tknf",
+    "svg",
+    "react",
+    "ui",
+    "icon"
+  ],
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "TKNF <development@tknf.net>",
+  "homepage": "https://github.com/tknf/dawn",
+  "repository": "https://github.com/tknf/dawn",
+  "bugs": {
+    "url": "https://github.com/tknf/dawn/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.module.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "parcel build --no-cache",
+    "clean": "rm -rf dist",
+    "version": "yarn version"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^16.8 || ^17.0 || ^18.0",
+    "react-dom": "^16.8 || ^17.0 || ^18.0"
+  },
+  "devDependencies": {}
+}

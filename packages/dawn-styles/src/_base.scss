@@ -1,0 +1,40 @@
+@use "./functions" as *;
+
+body {
+  background-color: color(standard-background);
+  color: color(standard-foreground);
+  font-family: font-family(body-sans);
+  font-size: font-size(body-standard);
+  font-weight: font-weight(regular);
+  line-height: line-height(standard);
+}
+
+button,
+a,
+input,
+textarea {
+  transition: all duration(faster) easing(enter);
+}
+
+a {
+  color: color(core-link);
+}
+
+button,
+a,
+summary,
+[tabindex],
+input[type="button"],
+input[type="submit"] {
+  outline: none;
+  &:focus-visible {
+    box-shadow: focus-ring();
+  }
+}
+
+input,
+textarea {
+  &:focus {
+    box-shadow: focus-ring();
+  }
+}

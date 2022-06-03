@@ -1,0 +1,45 @@
+@use "../functions" as *;
+
+@mixin icon($name, $value) {
+  @include val(icon-#{$name}, $value);
+}
+
+@function icon($name) {
+  @return di(icon-#{$name});
+}
+
+:root {
+  @include icon(size-small, 0.625rem);
+  @include icon(size-base, 1.25rem);
+  @include icon(size-medium, 1.5rem);
+}
+
+@include di() {
+  &Icon {
+    display: block;
+    width: icon(size-base);
+    height: icon(size-base);
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+
+    &--size-small {
+      width: icon(size-small);
+      height: icon(size-small);
+    }
+
+    &--size-medium {
+      width: icon(size-medium);
+      height: icon(size-medium);
+    }
+
+    &__Svg {
+      fill: currentColor;
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}

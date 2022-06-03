@@ -4,20 +4,27 @@ const path = require("path");
 module.exports = {
   framework: "@storybook/react",
   stories: ["../packages/**/*.stories.tsx"],
-  addons: ["@storybook/addon-storysource"],
+  addons: [
+    "@storybook/addon-storysource",
+    {
+      name: "storybook-addon-sass-postcss",
+      options: {
+        postcssLoaderOptions: {
+          implementation: require("postcss")
+        }
+      }
+    }
+  ],
   reactOptions: {
     strictMode: true
   },
-  webpackFinal: async (config) => ({
-    ...config,
-    resolve: {
-      ...config.resolve,
-      alias: {
-        ...config.resolve.alias,
-        ...convertTsConfigPathsToWebpackAliases()
-      }
-    }
-  })
+  webpackFinal: async (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      ...convertTsConfigPathsToWebpackAliases()
+    };
+    return config;
+  }
 };
 
 function convertTsConfigPathsToWebpackAliases() {

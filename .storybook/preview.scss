@@ -1,0 +1,14 @@
+$_prefix: "di" !default;
+
+@import "../packages/dawn-styles/src/main.scss";
+@import "./variables.scss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}

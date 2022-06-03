@@ -1,0 +1,119 @@
+@mixin val($name, $value) {
+  --di--#{$name}: #{$value};
+}
+
+@mixin di {
+  .di- {
+    @content;
+  }
+}
+
+@function di($name) {
+  @return var(--di--#{$name});
+}
+
+@function color($name) {
+  @return di(color-#{$name});
+}
+
+@function font-family($name) {
+  @return di(font-family-#{$name});
+}
+
+@function font-size($name) {
+  @return di(font-size-#{$name});
+}
+
+@function font-weight($name) {
+  @return di(font-weight-#{$name});
+}
+
+@function line-height($name) {
+  @return di(leading-#{$name});
+}
+
+@function letter-spacing($name) {
+  @return di(tracking-#{$name});
+}
+
+@function spacing($name) {
+  @return di(spacing-#{$name});
+}
+
+@function elevation($name) {
+  @return di(elevation-#{$name});
+}
+
+@function border($name) {
+  @return di(border-#{$name});
+}
+
+@function border-radius($name) {
+  @return di(border-radius-#{$name});
+}
+
+@function focus-ring() {
+  @return di(focus-ring);
+}
+
+@function z-index($name) {
+  @return di(z-#{$name});
+}
+
+@function easing($name) {
+  @return di(easing-#{$name});
+}
+
+@function duration($name) {
+  @return di(duration-#{$name});
+}
+
+$min: (
+  "sm": 640px,
+  "md": 960px,
+  "lg": 1280px,
+  "xl": 1680px
+) !default;
+
+$max: (
+  "xs": 639.98px,
+  "sm": 959.98px,
+  "md": 1279.98px,
+  "lg": 1679.98px
+) !default;
+
+@mixin min($breakpoint) {
+  @media screen and (min-width: #{map-get($min, $breakpoint)}) {
+    @content;
+  }
+}
+
+@mixin max($breakpoint) {
+  @media screen and (max-width: #{map-get($max, $breakpoint)}) {
+    @content;
+  }
+}
+
+@function breakpoint($name) {
+  @return di(breakpoint-#{$name});
+}
+
+// utils
+
+@mixin visually-hidden() {
+  position: absolute !important;
+  top: 0 !important;
+  width: 0.0625rem !important;
+  height: 0.0625rem !important;
+  margin: -0.0625rem !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0.0625rem, 0.0625rem, 0.0625rem, 0.0625rem) !important;
+  border: 0 !important ;
+  white-space: nowrap !important;
+  word-wrap: normal;
+}
+
+@function safearea($position) {
+  @return env(safe-area-inset-#{$position});
+}

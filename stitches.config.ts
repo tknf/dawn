@@ -8,7 +8,8 @@ export const { css, keyframes } = createStitches({
       gray300: "#aaa",
       black: "#111",
       red: "crimson",
-      green: "green"
+      green: "green",
+      yellow: "darkgoldenrod"
     }
   }
 });

@@ -1,5 +1,5 @@
 {
-  "name": "react-ui-monorepo",
+  "name": "dawn-monorepo",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -19,7 +19,7 @@
     "cypress:dev": "cypress open",
     "dev": "yarn storybook",
     "build-storybook": "build-storybook",
-    "build": "yarn build:config && yarn build:packages && yarn build:cleanup",
+    "build": "run-s -c build:config build:packages build:cleanup",
     "build:config": "mv tsconfig.json tsconfig.tmp.json && mv tsconfig.build.json tsconfig.json",
     "build:packages": "turbo run build",
     "build:cleanup": "mv tsconfig.json tsconfig.build.json && mv tsconfig.tmp.json tsconfig.json",
@@ -52,14 +52,20 @@
     "@types/jest-axe": "^3.5.3",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
+    "css-loader": "^5.2.7",
     "cypress": "^8.0.0",
     "cypress-real-events": "^1.5.0",
     "eslint": "^8.16.0",
     "jest": "^27.5.1",
     "jest-axe": "^6.0.0",
     "jest-watch-typeahead": "^1.0.0",
+    "npm-run-all": "^4.1.5",
     "parcel": "^2.6.0",
+    "postcss": "^8.4.14",
     "prettier": "^2.6.2",
+    "sass-loader": "^10.0.0",
+    "storybook-addon-sass-postcss": "^0.1.3",
+    "style-loader": "^2.0.0",
     "ts-jest": "^28.0.3",
     "turbo": "^1.2.14",
     "typescript": "^4.7.2"
@@ -100,8 +106,10 @@
       "no-plusplus": "off",
       "no-undef": "off",
       "react/display-name": "off",
+      "react/jsx-indent": "off",
       "react/no-array-index-key": "off",
-      "react-hooks/rules-of-hooks": "off"
+      "react-hooks/rules-of-hooks": "off",
+      "@typescript-eslint/explicit-member-accessibility": "off"
     }
   },
   "eslintIgnore": [

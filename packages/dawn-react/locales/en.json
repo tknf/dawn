@@ -1,0 +1,23 @@
+{
+  "Components": {
+    "Button": {
+      "Spinner": {
+        "label": "Loading..."
+      }
+    },
+    "Calendar": {
+      "ControlPrev": {
+        "label": "Previous month"
+      },
+      "ControlNext": {
+        "label": "Next month"
+      },
+      "ControlReset": {
+        "label": "Current month"
+      },
+      "Caption": {
+        "label": "Today"
+      }
+    }
+  }
+}
